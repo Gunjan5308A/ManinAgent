@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mathsPlayz — Educational Math Animation Generator</title>
+    <meta name="description" content="Generate beautiful mathematical animations automatically from natural language prompts using Manim and LLM agents.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    <div class="glass-bg-glow secondary"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Controls -->
+        <aside class="control-sidebar">
+            <div class="brand">
+                <span class="logo-icon">▲</span>
+                <span class="logo-text">maths<span class="logo-accent">Playz</span></span>
+            </div>
+
+            <form id="generatorForm" class="sidebar-form">
+                <div class="form-group">
+                    <label for="prompt">Topic or Equation</label>
+                    <textarea id="prompt" name="topic" rows="4" placeholder="e.g., Explain the Pythagorean theorem showing a triangle morphing its side squares..." required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quality">Render Quality</label>
+                        <select id="quality" name="quality">
+                            <option value="l" selected>Low (480p - Fast)</option>
+                            <option value="m">Medium (720p)</option>
+                            <option value="h">High (1080p)</option>
+                            <option value="k">4K (2160p - Ultra)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fps">Frame Rate</label>
+                        <select id="fps" name="fps">
+                            <option value="15" selected>15 FPS</option>
+                            <option value="30">30 FPS</option>
+                            <option value="60">60 FPS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="switch-label">
+                        <input type="checkbox" id="useRag" name="use_rag" checked>
+                        <span class="switch-slider"></span>
+                        <span class="switch-text">RAG Code Guidance</span>
+                    </label>
+                </div>
+
+                <button type="submit" id="generateBtn" class="primary-btn">
+                    <span class="btn-text">Generate Animation</span>
+                    <span class="btn-glow"></span>
+                </button>
+            </form>
+
+            <div class="sidebar-footer">
+                <p>mathsPlayz v1.0.0 • Production Ready</p>
+            </div>
+        </aside>
+
+        <!-- Main Display Dashboard -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>AI Educational Animation Studio</h1>
+                <div class="server-status" id="serverStatus">
+                    <span class="status-indicator online"></span>
+                    <span class="status-label">API Online</span>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- Status/Console Terminal -->
+                <section class="dashboard-card console-card" id="consoleSection">
+                    <div class="card-header">
+                        <h2>Generation Logs & Status</h2>
+                        <span class="pulse-indicator" id="taskPulse"></span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progressBar" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-metrics">
+                            <span class="progress-text" id="progressText">Idle — Waiting for Prompt</span>
+                            <span class="progress-percent" id="progressPercent">0%</span>
+                        </div>
+                    </div>
+                    <div class="terminal-body" id="logTerminal">
+                        <div class="terminal-line system-line">[System] Initialize workspace... Ready.</div>
+                        <div class="terminal-line prompt-line">[System] Enter a mathematical topic on the left sidebar to generate a custom Manim animation.</div>
+                    </div>
+                </section>
+
+                <!-- Media Player -->
+                <section class="dashboard-card preview-card" id="previewSection">
+                    <div class="card-header">
+                        <h2>Output Preview</h2>
+                    </div>
+                    <div class="preview-display" id="videoWrapper">
+                        <div class="empty-state" id="videoEmptyState">
+                            <div class="empty-icon">🎬</div>
+                            <p>Animation previews will be shown here after rendering.</p>
+                        </div>
+                        <video id="player" controls class="video-player" hidden></video>
+                    </div>
+                    <div class="video-actions" id="videoActions" hidden>
+                        <a id="downloadLink" href="#" download class="secondary-btn download-btn">
+                            <span>Download MP4</span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Task History Section -->
+            <section class="dashboard-card history-card">
+                <div class="card-header">
+                    <h2>Session History</h2>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-empty">No animations generated yet in this session.</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
