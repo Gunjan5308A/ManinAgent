@@ -1,0 +1,32 @@
+name: layout_circle
+category: layout
+description: Arrange mobjects in a circle
+imports:
+  - "from manim import *"
+params:
+  - name: mobjects_var
+    type: str
+    description: "Variable name of list/VGroup of mobjects"
+    required: true
+  - name: radius
+    type: float
+    description: "Circle radius"
+    default: 2
+    required: false
+  - name: start_angle
+    type: float
+    description: "Starting angle in radians"
+    default: 0
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate arrangement"
+    default: false
+    required: false
+template: |
+    circle_group = VGroup(*{{ mobjects_var }}).arrange_on_circle(radius={{ radius }}, start_angle={{ start_angle }})
+    {% if animate %}
+    self.play(Create(circle_group))
+    {% else %}
+    self.add(circle_group)
+    {% endif %}

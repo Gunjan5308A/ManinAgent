@@ -1,0 +1,42 @@
+name: create_polygon
+category: shapes
+description: Create a polygon from plain list vertices (not numpy arrays)
+imports:
+  - "from manim import *"
+params:
+  - name: vertices
+    type: list
+    description: "List of [x, y, 0] vertices (plain lists, not np.array)"
+    required: true
+  - name: color
+    type: str
+    description: "Fill/stroke color (e.g., BLUE, RED, '#FF0000')"
+    default: "BLUE"
+    required: false
+  - name: fill_opacity
+    type: float
+    description: "Fill opacity 0-1"
+    default: 0.3
+    required: false
+  - name: stroke_width
+    type: float
+    description: "Stroke width"
+    default: 2
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate creation"
+    default: true
+    required: false
+template: |
+    poly = Polygon(
+        *{{ vertices }},
+        color={{ color }},
+        fill_opacity={{ fill_opacity }},
+        stroke_width={{ stroke_width }}
+    )
+    {% if animate %}
+    self.play(Create(poly))
+    {% else %}
+    self.add(poly)
+    {% endif %}

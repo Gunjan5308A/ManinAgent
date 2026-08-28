@@ -1,0 +1,42 @@
+name: create_axes
+category: coordinate_systems
+description: Create 2D axes with configurable ranges and number labels
+imports:
+  - "from manim import *"
+params:
+  - name: x_range
+    type: list
+    description: "[x_min, x_max, step] for x-axis"
+    default: [-3, 3, 1]
+    required: false
+  - name: y_range
+    type: list
+    description: "[y_min, y_max, step] for y-axis"
+    default: [-2, 2, 1]
+    required: false
+  - name: include_numbers
+    type: bool
+    description: "Show numbers on axes"
+    default: true
+    required: false
+  - name: axis_config
+    type: dict
+    description: "Additional axis configuration"
+    default: {}
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate creation"
+    default: true
+    required: false
+template: |
+    ax = Axes(
+        x_range={{ x_range }},
+        y_range={{ y_range }},
+        axis_config={"include_numbers": {{ include_numbers }}, **{{ axis_config }}}
+    )
+    {% if animate %}
+    self.play(Create(ax))
+    {% else %}
+    self.add(ax)
+    {% endif %}

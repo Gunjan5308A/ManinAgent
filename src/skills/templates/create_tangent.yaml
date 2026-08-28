@@ -1,0 +1,58 @@
+name: create_tangent
+category: graphs
+description: Create a tangent line to a curve at a given point
+imports:
+  - "from manim import *"
+params:
+  - name: ax_var
+    type: str
+    description: "Variable name of the Axes object"
+    default: "ax"
+    required: false
+  - name: func
+    type: str
+    description: "Original function as string, e.g., 'lambda x: x**2'"
+    required: true
+  - name: x_point
+    type: float
+    description: "x-coordinate of tangent point"
+    required: true
+  - name: slope_func
+    type: str
+    description: "Derivative function as string, e.g., 'lambda x: 2*x'"
+    required: true
+  - name: color
+    type: str
+    description: "Tangent line color"
+    default: "RED"
+    required: false
+  - name: x_range
+    type: list
+    description: "[x_min, x_max] for tangent line extent"
+    required: false
+  - name: show_dot
+    type: bool
+    description: "Show dot at tangent point"
+    default: true
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate creation"
+    default: true
+    required: false
+template: |
+    tangent = {{ ax_var }}.plot({{ slope_func }}, x_range={{ x_range if x_range is not none else [x_point - 1, x_point + 1] }}, color={{ color }})
+    {% if show_dot %}
+    dot = Dot({{ ax_var }}.c2p({{ x_point }}, {{ func }}({{ x_point }})), color={{ color }})
+    {% if animate %}
+    self.play(FadeIn(dot), Create(tangent))
+    {% else %}
+    self.add(dot, tangent)
+    {% endif %}
+    {% else %}
+    {% if animate %}
+    self.play(Create(tangent))
+    {% else %}
+    self.add(tangent)
+    {% endif %}
+    {% endif %}

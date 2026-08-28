@@ -1,0 +1,51 @@
+name: plot_function
+category: graphs
+description: Plot a mathematical function on existing axes
+imports:
+  - "from manim import *"
+params:
+  - name: ax_var
+    type: str
+    description: "Variable name of the Axes object (e.g., 'ax')"
+    default: "ax"
+    required: false
+  - name: func
+    type: str
+    description: "Lambda function as string, e.g., 'lambda x: x**2'"
+    required: true
+  - name: color
+    type: str
+    description: "Curve color"
+    default: "YELLOW"
+    required: false
+  - name: x_range
+    type: list
+    description: "[x_min, x_max] for plotting range (optional, uses axes range if not given)"
+    default: null
+    required: false
+  - name: label
+    type: str
+    description: "Label for the graph (e.g., 'x^2')"
+    default: null
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate creation"
+    default: true
+    required: false
+template: |
+    curve = {{ ax_var }}.plot({{ func }}, color={{ color }}{% if x_range is not none %}, x_range={{ x_range }}{% endif %})
+    {% if label is not none %}
+    label = {{ ax_var }}.get_graph_label(curve, label="{{ label }}")
+    {% if animate %}
+    self.play(Create(curve), Write(label))
+    {% else %}
+    self.add(curve, label)
+    {% endif %}
+    {% else %}
+    {% if animate %}
+    self.play(Create(curve))
+    {% else %}
+    self.add(curve)
+    {% endif %}
+    {% endif %}

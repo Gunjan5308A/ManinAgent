@@ -1,0 +1,26 @@
+name: animate_fade
+category: animations
+description: Fade in or out a mobject
+imports:
+  - "from manim import *"
+params:
+  - name: mobject_var
+    type: str
+    description: "Variable name of mobject"
+    required: true
+  - name: direction
+    type: str
+    description: "'in' for FadeIn, 'out' for FadeOut"
+    default: "in"
+    required: false
+  - name: run_time
+    type: float
+    description: "Animation duration in seconds"
+    default: 1
+    required: false
+template: |
+    {% if direction == "in" %}
+    self.play(FadeIn({{ mobject_var }}), run_time={{ run_time }})
+    {% else %}
+    self.play(FadeOut({{ mobject_var }}), run_time={{ run_time }})
+    {% endif %}

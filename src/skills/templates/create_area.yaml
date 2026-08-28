@@ -1,0 +1,42 @@
+name: create_area
+category: graphs
+description: Create area under a curve on existing axes
+imports:
+  - "from manim import *"
+params:
+  - name: ax_var
+    type: str
+    description: "Variable name of the Axes object"
+    default: "ax"
+    required: false
+  - name: curve_var
+    type: str
+    description: "Variable name of the curve (from plot_function)"
+    default: "curve"
+    required: false
+  - name: x_range
+    type: list
+    description: "[x_min, x_max] for area range"
+    required: true
+  - name: color
+    type: str
+    description: "Fill color"
+    default: "BLUE"
+    required: false
+  - name: opacity
+    type: float
+    description: "Fill opacity 0-1"
+    default: 0.3
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate creation"
+    default: true
+    required: false
+template: |
+    area = {{ ax_var }}.get_area({{ curve_var }}, x_range={{ x_range }}, color={{ color }}, opacity={{ opacity }})
+    {% if animate %}
+    self.play(FadeIn(area))
+    {% else %}
+    self.add(area)
+    {% endif %}

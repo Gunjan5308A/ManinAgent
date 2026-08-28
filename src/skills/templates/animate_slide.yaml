@@ -1,0 +1,26 @@
+name: animate_slide
+category: animations
+description: Slide a mobject along a path (e.g., number line, axes)
+imports:
+  - "from manim import *"
+params:
+  - name: mobject_var
+    type: str
+    description: "Variable name of mobject to animate"
+    required: true
+  - name: target_position
+    type: str
+    description: "Target position as method call, e.g., 'ax.c2p(2, 4)' or 'nl.n2p(3)'"
+    required: true
+  - name: run_time
+    type: float
+    description: "Animation duration in seconds"
+    default: 2
+    required: false
+  - name: rate_func
+    type: str
+    description: "Rate function (e.g., 'linear', 'smooth', 'there_and_back')"
+    default: "smooth"
+    required: false
+template: |
+    self.play({{ mobject_var }}.animate.move_to({{ target_position }}), run_time={{ run_time }}, rate_func={{ rate_func }})

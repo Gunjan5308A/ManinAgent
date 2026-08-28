@@ -1,0 +1,26 @@
+name: animate_transform
+category: animations
+description: Transform one mobject into another
+imports:
+  - "from manim import *"
+params:
+  - name: from_var
+    type: str
+    description: "Variable name of source mobject"
+    required: true
+  - name: to_var
+    type: str
+    description: "Variable name of target mobject"
+    required: true
+  - name: run_time
+    type: float
+    description: "Animation duration in seconds"
+    default: 2
+    required: false
+  - name: path_arc
+    type: float
+    description: "Arc angle for transform path (radians)"
+    default: 0
+    required: false
+template: |
+    self.play(Transform({{ from_var }}, {{ to_var }}), run_time={{ run_time }}{% if path_arc != 0 %}, path_arc={{ path_arc }}{% endif %})

@@ -1,0 +1,37 @@
+name: create_number_line
+category: coordinate_systems
+description: Create a 1D number line with configurable range and labels
+imports:
+  - "from manim import *"
+params:
+  - name: x_range
+    type: list
+    description: "[x_min, x_max, step]"
+    default: [-4, 4, 1]
+    required: false
+  - name: length
+    type: float
+    description: "Total length of the number line"
+    default: 8
+    required: false
+  - name: include_numbers
+    type: bool
+    description: "Show numbers on the line"
+    default: true
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate creation"
+    default: true
+    required: false
+template: |
+    nl = NumberLine(
+        x_range={{ x_range }},
+        length={{ length }},
+        include_numbers={{ include_numbers }}
+    )
+    {% if animate %}
+    self.play(Create(nl))
+    {% else %}
+    self.add(nl)
+    {% endif %}

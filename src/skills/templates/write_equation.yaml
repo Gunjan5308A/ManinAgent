@@ -1,0 +1,38 @@
+name: write_equation
+category: text
+description: Write a multi-line aligned equation
+imports:
+  - "from manim import *"
+params:
+  - name: lines
+    type: list
+    description: "List of LaTeX strings for each line"
+    required: true
+  - name: position
+    type: str
+    description: "Position method"
+    default: "UP"
+    required: false
+  - name: color
+    type: str
+    description: "Text color"
+    default: "WHITE"
+    required: false
+  - name: scale
+    type: float
+    description: "Scale factor"
+    default: 1
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate writing"
+    default: true
+    required: false
+template: |
+    eq_lines = [MathTex("{{ line }}") for line in {{ lines }}]
+    equation = VGroup(*eq_lines).arrange(DOWN, aligned_edge=LEFT).scale({{ scale }}).set_color({{ color }}).{{ position }}
+    {% if animate %}
+    self.play(*[Write(line) for line in eq_lines])
+    {% else %}
+    self.add(equation)
+    {% endif %}

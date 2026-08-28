@@ -1,0 +1,37 @@
+name: layout_stack
+category: layout
+description: Stack mobjects vertically or horizontally
+imports:
+  - "from manim import *"
+params:
+  - name: mobjects_var
+    type: str
+    description: "Variable name of list/VGroup of mobjects"
+    required: true
+  - name: direction
+    type: str
+    description: "'DOWN' for vertical, 'RIGHT' for horizontal"
+    default: "DOWN"
+    required: false
+  - name: buff
+    type: float
+    description: "Buffer between mobjects"
+    default: 0.3
+    required: false
+  - name: aligned_edge
+    type: str
+    description: "Alignment edge (e.g., 'LEFT', 'RIGHT', 'ORIGIN')"
+    default: "LEFT"
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate arrangement"
+    default: false
+    required: false
+template: |
+    stack = VGroup(*{{ mobjects_var }}).arrange({{ direction }}, buff={{ buff }}, aligned_edge={{ aligned_edge }})
+    {% if animate %}
+    self.play(Create(stack))
+    {% else %}
+    self.add(stack)
+    {% endif %}

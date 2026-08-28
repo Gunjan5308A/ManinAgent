@@ -1,0 +1,45 @@
+name: write_label
+category: text
+description: Write a label next to a mobject
+imports:
+  - "from manim import *"
+params:
+  - name: text
+    type: str
+    description: "Label text (plain or LaTeX)"
+    required: true
+  - name: target_var
+    type: str
+    description: "Variable name of target mobject"
+    required: true
+  - name: direction
+    type: str
+    description: "Direction from target (UP, DOWN, LEFT, RIGHT, etc.)"
+    default: "DOWN"
+    required: false
+  - name: buff
+    type: float
+    description: "Buffer from target"
+    default: 0.3
+    required: false
+  - name: is_math
+    type: bool
+    description: "Whether text is LaTeX math"
+    default: true
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate writing"
+    default: true
+    required: false
+template: |
+    {% if is_math %}
+    label = MathTex("{{ text }}").next_to({{ target_var }}, {{ direction }}, buff={{ buff }})
+    {% else %}
+    label = Text("{{ text }}").next_to({{ target_var }}, {{ direction }}, buff={{ buff }})
+    {% endif %}
+    {% if animate %}
+    self.play(Write(label))
+    {% else %}
+    self.add(label)
+    {% endif %}

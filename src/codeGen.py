@@ -33,3 +33,6 @@ def generate_code(scene: dict) -> str:
 def fix_code(code: str, error: str) -> str:
     prompt = f"Fix this Manim code.\n\nError:\n{error[-2000:]}\n\nCode:\n{code}"
     return extract_code(ask(prompt, FIX_SYS, MODEL, BASE_URL))
+
+
+

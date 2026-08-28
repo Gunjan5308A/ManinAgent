@@ -1,0 +1,37 @@
+name: write_formula
+category: text
+description: Write a LaTeX math formula
+imports:
+  - "from manim import *"
+params:
+  - name: latex
+    type: str
+    description: "LaTeX string (e.g., 'a^2 + b^2 = c^2')"
+    required: true
+  - name: position
+    type: str
+    description: "Position method, e.g., 'UP', 'DOWN', 'ORIGIN', 'to_edge(UP)'"
+    default: "UP"
+    required: false
+  - name: color
+    type: str
+    description: "Text color"
+    default: "WHITE"
+    required: false
+  - name: scale
+    type: float
+    description: "Scale factor"
+    default: 1
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate writing"
+    default: true
+    required: false
+template: |
+    formula = MathTex("{{ latex }}").scale({{ scale }}).set_color({{ color }}).{{ position }}
+    {% if animate %}
+    self.play(Write(formula))
+    {% else %}
+    self.add(formula)
+    {% endif %}

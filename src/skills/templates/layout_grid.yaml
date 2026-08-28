@@ -1,0 +1,35 @@
+name: layout_grid
+category: layout
+description: Arrange mobjects in a grid
+imports:
+  - "from manim import *"
+params:
+  - name: mobjects_var
+    type: str
+    description: "Variable name of list/VGroup of mobjects"
+    required: true
+  - name: rows
+    type: int
+    description: "Number of rows"
+    required: true
+  - name: cols
+    type: int
+    description: "Number of columns"
+    required: true
+  - name: buff
+    type: float
+    description: "Buffer between mobjects"
+    default: 0.5
+    required: false
+  - name: animate
+    type: bool
+    description: "Whether to animate arrangement"
+    default: false
+    required: false
+template: |
+    grid = VGroup(*{{ mobjects_var }}).arrange_in_grid(rows={{ rows }}, cols={{ cols }}, buff={{ buff }})
+    {% if animate %}
+    self.play(Create(grid))
+    {% else %}
+    self.add(grid)
+    {% endif %}
